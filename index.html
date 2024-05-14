@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vue</title>
+        <!-- CDN: cjdns.com unpkg.com  jsdelivr.net etc -->
+        <!--
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
+        -->
+        <script src="js/vue.js"></script>
+        <script src="js/axios.js"></script>
+        <link rel="stylesheet" href="css/styles.css">
+
+    </head>
+    <body>
+        <h1>Templates</h1>
+        <div id="templates">
+            Nombre : {{ nombre }}<br>
+            Apellido : {{ apellido }}<br>
+            <p>{{ nombre_completo() }}</p>
+            <div v-html="htmlcontent"></div>
+            <img v-bind:src="imgsrc" width="150">
+        </div>
+        <h1>Components</h1>
+        <div id="component1">
+            <TestComponent></TestComponent>
+        </div>
+        <div id="component2">
+            <TestComponent></TestComponent>
+        </div>
+        <div id="component3">
+            <TestComponent></TestComponent>
+        </div>
+        <h2>Dynamic Components</h2>
+        <div id="databinding">
+            <component v-bind:is="view"></component>
+        </div>
+
+        <h1>Compute propierties</h1>
+        <div id="compute_props">
+            Nombre : <input type="text" v-model="firstname">
+            Apellido : <input type="text" v-model="lastname"><br>
+            Mi nombre es: {{ firstname }} {{ lastname }}<br>
+            Using computed props: {{getfullname}}<br>
+        </div>
+        <h1>Accessing the DOM from Vue with <i>$ref</i></h1>
+        <div id="refs_dom">
+            <p>Accediendo a elementos de DOM utilizando vm.$refs</p>
+            Añade texto al input:
+            <input type="text" ref="text">
+            <button type="button" @click="addText">Guardar</button>
+            <button type="button" @click="deleteText">Borrar</button><br>
+            <p ref="textField"></p>
+        </div>
+
+        <h1>Data Binding</h1>
+        <div id="classbinding">
+            <h2>Class Binding</h2>
+            {{title}}<br>
+            <a href="hreflink">Click Me</a><br><!-- no anda -->
+            <!-- <a href="{{hreflink}}">Click Me</a><br>--><!-- no anda -->
+            <a v-bind:href="hreflink">Click Me</a><br>
+            <div v-bind:class="{active:isActive}"><b>{{title}}</b></div><br>
+            <div class="info" v-bind:class="{active:isActive,'displayError':hasError}">
+                {{title}}
+            </div><br>
+            <new_component class="active"></new_component>
+        </div>
+        <h2>Style binding</h2>
+        <div id="stylebinding">
+            <div v-bind:style="{color:activeColor,fontSize:fontSize+'px'}">{{title}}</div>
+        </div>
+        <h2>Formubinding</h2>
+        <div id="formubinding">
+            <label>Textbox</label><br>
+            <input v-model="name" placeholder="Enter Name"><br>
+            Name entered is: {{name}}<br>
+            <hr/>
+            <label>Textarea</label><br>
+            <textarea v-model="textmessage" placeholder="Add details"></textarea><br>
+            {{textmessage}}<br>
+            <hr/>
+            <label>Checkbox</label><br>
+            <input type="checkbox" id="checkbox" v-model="checked">{{checked}}<br>
+            <hr/>
+            <label>Radio</label><br>
+            <input type="radio" id="radio1" value="White" v-model="picked">White<br>
+            <input type="radio" id="radio2" value="Black" v-model="picked">Black<br>
+            Radio element picked: {{picked}}
+            <hr/>
+            <label>Select</label><br>
+            <select v-model="languages">
+                <option disabled value="">Please select one</option>
+                <option>Java</option>
+                <option>Python</option>
+                <option>Php</option>
+            </select><br>
+            Language selected is: {{languages}}
+
+            </select>
+
+            <h2>Modificadores</h2>
+            Enter Age:</span><input v-model.number="age"><br>
+            The Age entered is: {{age}}<br>
+            Enter Message:</span><input v-model.lazy="msg"><br>
+            Display Message: {{msg}}<br>
+            Enter Message:</span><input v-model.trim="message"><br>
+            Display Message: {{message}}<br>
+        </div>
+
+        <div id="events">
+            <h1>Eventos</h1>
+            <button v-on:click="displaynumbers">Click Me</button><br>
+            <button @click="displaynumbers">Click Me</button><br>
+            Add number 100 + 200 = {{total}}<br>
+            <div v-bind:style="styleobj" v-on:mouseover="changebgcolor" v-on:mouseout="originalcolor"></div>
+
+            <h3>Modificadores de eventos</h3>
+            <button v-on:click="buttonclicked" >Click Count</button><br>
+            Output : {{clicknum}}<br>
+            <button v-on:click.once="buttonclickedonce" >Click Once</button><br>
+            Output : {{clicknum1}}<br>
+            <a href="https://www.example.com" v-on:click="clickme">Click Me</a><br>
+            <a href="https://www.example.com" v-on:click.prevent="clickme">Click Me</a><br>
+
+            <input type="text" v-on:keyup.enter="showinputvalue" placeholder="Enter name and press ENTER"><br>
+            Your name is : {{name}}<br>
+        </div>
+
+        <div id="conditional">
+            <h1>Rasterizacion condicional y listas</h1>
+            <button v-on:click="toggleshow">Toggle Show</button> {{show}}
+            <p v-if="show">This p tag showing</p>
+            <p v-else>Not showing</p>
+            <div v-show="show"><b>V-Show</b></div>
+            <input type="text" v-on:keyup.enter="addFruit" placeholder="Enter fruit and press ENTER"><br>
+            <p v-if="items.length>0">Display fruit names</p>
+            <ul>
+                <li v-for="a in items">{{a}}</li>
+            </ul>
+            <ul>
+                <li v-for="(value,key) in items">{{key}} : {{value}}</li>
+            </ul>
+            <table border="1" cellpadding="3">
+                <tr v-for="(value,key) in obj">
+                    <th>{{key}}</th>
+                    <td>{{value}}</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <!-- vue -->
+        <script src="js/vue_template.js"></script>
+        <script src="js/vue_component.js"></script>
+        <script src="js/vue_computeprops.js"></script>
+        <script src="js/vue_refs.js"></script>
+        <script src="js/vue_databinding.js"></script>
+        <script src="js/vue_events.js"></script>
+        <script src="js/vue_conditional.js"></script>
+        <!-- fetch -->
+        <script src="js/fetch.js"></script>
+        <script src="js/fetch_async_await.js"></script>
+        <script src="js/fetch_async_await_axios.js"></script>
+    </body>
+</html>
