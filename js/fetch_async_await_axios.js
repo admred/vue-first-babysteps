@@ -1,5 +1,3 @@
-
-
 //const url2='https://jsonplaceholder.typicode.com'
 const url2='http://localhost:8080/api/v1'
 
@@ -14,7 +12,7 @@ const getNombre1=async(idPost) => {
         console.log(resPost.data.userId)
         const resUser=await axios(`${url2}/users/${resPost.data.userId}`)
         if(resUser ===  undefined){
-            throw new Error("Error no se encontro el usuario con resPost.data.userId="+post.userId)
+            throw new Error("Error no se encontro el usuario con resPost.data.userId="+resPost.data.userId)
         }
         console.log(resUser.data.name)
     }catch(error){
